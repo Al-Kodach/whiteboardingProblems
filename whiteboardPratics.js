@@ -101,22 +101,64 @@ console.log('printReverse =>  Runtime: ', e - s + 'ms\n'); // 36ms
 function fizzBuzz(max) {
     /* 
         we trade space for time;
+        time complexity O(n);
+        space complexity O(n)
     */
     let nums = new Array(max),
         size = 0;
 
     for (let i = 0; i < max; i++) {
-        if ( (i % 3 === 0 ^ i % 5 === 0)) {
-            nums[ size ] = i;
-            size++;
-            // if ( !(i % 3 === 0 && i % 5 === 0)) {
-            // }
+        if ((i % 3 === 0 ^ i % 5 === 0)) {
+            if (!(i % 3 === 0 && i % 5 === 0)) {
+                nums[size] = i;
+                size++;
+            }
         }
     }
 
     nums.length = size;
-    console.log(nums);
     return nums;
 }
 
+s = new Date();
 fizzBuzz(20); // => [3, 5, 6, 9, 10, 12, 18]
+fizzBuzz(10000000); // => Runtime: 71ms
+e = new Date();
+console.log('fizzBuzz =>  Runtime: ', e - s + 'ms\n'); // 36ms
+
+
+function isPrime(number) {
+    // space complexity is O(1);
+    // time compexity is O(n);
+
+    // asume num is a positive integer;
+    if (number <= 1 ) return false;
+
+    // execution reach here when number is positive greater than 1.
+
+    // iterate from 2 to number/2.
+    // to archive a time complexity of O(1), we use Math.sqrt();
+    // we iterate once on every number.
+    for (let i = 2; i < Math.sqrt(number); i++) {
+        // check if i divides number without leaving a reminder.
+        if (number % i === 0) {
+           return false;
+        }
+    }
+
+    // after iterating, num is prime
+    return true;
+
+    // now time complexity is O(1), space complexity is also O(1)
+}
+
+s = new Date();
+isPrime(2);  // => true
+isPrime(10);  // => false
+isPrime(11);  // => true
+isPrime(9);  // => false
+isPrime(2017);  // => true
+
+e = new Date();
+
+console.log('isPrime =>  Runtime: ', e - s + 'ms\n'); // 0ms
