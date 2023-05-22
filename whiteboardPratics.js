@@ -98,12 +98,18 @@ printReverse(0, 5000000); // 33 ms runtime
 e = new Date();
 console.log('printReverse =>  Runtime: ', e - s + 'ms\n'); // 36ms
 
+
+
+let FizzbuzzMemo = {};
+
 function fizzBuzz(max) {
     /* 
         we trade space for time;
-        time complexity O(n);
+        time complexity O(n) at first call
         space complexity O(n)
     */
+   if (max in FizzbuzzMemo) return FizzbuzzMemo[max];
+
     let nums = new Array(max),
         size = 0;
 
@@ -117,14 +123,25 @@ function fizzBuzz(max) {
     }
 
     nums.length = size;
-    return nums;
+    FizzbuzzMemo[max] = nums;
+    return FizzbuzzMemo[max];
+
+    // after ceching, we now have a time complexity of O(1)
+    // when same number is called multiple times
 }
 
 s = new Date();
-fizzBuzz(20); // => [3, 5, 6, 9, 10, 12, 18]
-fizzBuzz(10000000); // => Runtime: 71ms
+fizzBuzz(20); // => [3, 5, 6, 9, 10, 12, 18] // 0ms
+fizzBuzz(10000000); // => Runtime: 66ms
 e = new Date();
-console.log('fizzBuzz =>  Runtime: ', e - s + 'ms\n'); // 36ms
+console.log('fizzBuzz =>  Runtime: ', e - s + 'ms\n'); // 66ms
+
+
+s = new Date();
+fizzBuzz(20); // => [3, 5, 6, 9, 10, 12, 18] // 0ms
+fizzBuzz(10000000); // => Runtime: 0ms
+e = new Date();
+console.log('fizzBuzz =>  Runtime: ', e - s + 'ms\n'); // 0ms
 
 
 function isPrime(number) {
@@ -146,7 +163,7 @@ function isPrime(number) {
         }
     }
 
-    // after iterating, num is prime
+    // after iterating, number is prime
     return true;
 
     // now time complexity is O(1), space complexity is also O(1)
@@ -162,3 +179,16 @@ isPrime(2017);  // => true
 e = new Date();
 
 console.log('isPrime =>  Runtime: ', e - s + 'ms\n'); // 0ms
+
+function factorArray(array,  number) {
+  /* 
+    we are returning an array, we modify the original array
+    to achieve a space complexity of O(1);
+  */
+    
+   
+}
+
+factorArray([2,3,4,5,6],20) // => [2,4,5]
+factorArray([2,3,4,5,6],35) // => [5]
+factorArray([10,15,20,25],5) // => []
